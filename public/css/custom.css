@@ -1,0 +1,40 @@
+.custom-primary-bgcolor {
+    background: #ef705f;
+    color: #fff;
+}
+
+.custom-secondary-bgcolor {
+    background: #d2a94f;
+}
+
+.dot-primary {
+    height: 12px;
+    width: 12px;
+    background-color: #ef705f;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-orange {
+    height: 12px;
+    width: 12px;
+    background-color: #f39c12;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-green {
+    height: 12px;
+    width: 12px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-blue {
+    height: 12px;
+    width: 12px;
+    background-color: #3498db;
+    border-radius: 50%;
+    display: inline-block;
+}
