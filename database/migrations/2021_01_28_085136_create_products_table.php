@@ -13,19 +13,22 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('man_products', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('product_code');
-            $table->string('product_name');
-            $table->string('product_category');
-            $table->string('product_type');
-            $table->string('sales_price_wt', 6, 2);
-            $table->string('unit');
-            $table->string('internal_description');
-            $table->string('bar_code');
-            $table->string('picture');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('man_products'))
+        {
+            Schema::create('man_products', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('product_code');
+                $table->string('product_name');
+                $table->string('product_category');
+                $table->string('product_type');
+                $table->string('sales_price_wt', 6, 2);
+                $table->string('unit');
+                $table->string('internal_description');
+                $table->string('bar_code');
+                $table->string('picture')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

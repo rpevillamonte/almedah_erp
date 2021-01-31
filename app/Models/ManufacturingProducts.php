@@ -18,6 +18,7 @@ class ManufacturingProducts extends Model
         'sales_price_wt',
         'unit',
         'internal_description',
-        'bar_code'
+        'bar_code',
+        'picture'
     ];
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \App\Models\ManufacturingMaterials;
 use Illuminate\Http\Request;
 use DB;
+use Exception;
 
 class MaterialsController extends Controller
 {

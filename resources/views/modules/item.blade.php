@@ -599,7 +599,7 @@ try {
             e.preventDefault();
             var formData = new FormData($('#edit-product-form')[0]);
             $.ajax({
-                type: 'POST',
+                type: 'PATCH',
                 url: $('#edit-product-form').attr('action'),
                 data: formData,
                 cache: false,
