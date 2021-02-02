@@ -1,3 +1,18 @@
+<?php
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'almedah_erp_db');
+
+try {
+    $pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("ERROR: Could not connect. " . $e->getMessage());
+}
+
+?>
+
 <script>
     function deleteMaterial(id) {
         if (confirm("Are you sure?")) {
@@ -50,7 +65,7 @@
             </div>
             <div class="row pb-2">
                 <div class="col-12 text-right">
-                    <p><button type="button" class="btn btn-outline-primary btn-sm" onclick="$('#create-material-form').modal('show')"><i class="fas fa-plus" aria-hidden="true"></i> Add New</button></p>
+                    <p><button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#create-material-form"><i class="fas fa-plus" aria-hidden="true"></i> Add New</button></p>
                 </div>
             </div>
 
@@ -58,11 +73,11 @@
             <table id="inventoryTable" class="table table-striped table-bordered hover" style="width:100%">
                 <thead>
                     <tr>
-                        {{-- <td>
+                        <td>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input">
                             </div>
-                        </td> --}}
+                        </td>
                         <td>Item Code</td>
                         <td>Item Name</td>
                         <td>Unit Price (PHP)</td>
@@ -73,32 +88,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                            @foreach ($raw_materials as $row)
+                    <?php
+                    $sql = "SELECT * FROM env_raw_materials";
+
+                    if ($stmt = $pdo->prepare($sql)) {
+                        if ($stmt->execute()) {
+
+                            $rows = $stmt->fetchAll();
+
+                            foreach ($rows as $row) {
+                    ?>
                                 <tr>
-                                    {{-- <td>
+                                    <td>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input">
                                         </div>
-                                    </td> --}}
-                                    <td>{{ $row["item_code"] }}</td>
-                                    <td>{{ $row['item_name'] }}</td>
+                                    </td>
+                                    <td><?= $row["item_code"] ?></td>
+                                    <td><?= $row["item_name"] ?></td>
 
-                                    <td class="text-black-50">{{ $row["unit_price"] }}</td>
-                                    <td class="text-black-50">{{ $row["total_amount"] }}</td>
-                                    <td class="text-black-50">{{ $row["rm_status"] }}</td>
-                                    <td class="text-black-50 text-center"><a href='#' onclick="$('#image-view').attr('src', 'storage/{{ $row["item_image"] }}')" class="row-img-view-btn" data-toggle="modal" data-target="#exampleImage">View</a></td>
+                                    <td class="text-black-50"><?= $row["unit_price"] ?></td>
+                                    <td class="text-black-50"><?= $row["total_amount"] ?></td>
+                                    <td class="text-black-50"><?= $row["rm_status"] ?></td>
+                                    <td class="text-black-50 text-center"><a href='#' onclick="$('#image-view').attr('src', 'storage/<?= $row["item_image"] ?>')" data-toggle="modal" data-target="#exampleImage">View</a></td>
                                     <td class="">
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
                                                 <button data-toggle="modal" data-target="#update-product-form" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
                                             </li>
                                             <li class="list-inline-item">
-                                                <button onclick="deleteMaterial({{ $row['id'] }})" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash"></i></button>
+                                                <button onclick="deleteMaterial(<?= $row["id"] ?>)" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash"></i></button>
                                             </li>
                                         </ul>
                                     </td>
-                                </tr>    
-                            @endforeach
+                                </tr>
+                    <?php
+                            }
+                        }
+                    }
+                    ?>
                 </tbody>
             </table>
 
@@ -137,17 +165,6 @@
         </div>
     </div>
 </div>
-<!-- Edit Material Modal-->
-<div class="modal fade" id="update-material-form" tabindex="-1" aria-labelledby="updateModalForm" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!-- Add Material Modal -->
 <div class="modal fade" id="create-material-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -155,12 +172,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Material</h5>
-                <button type="button" class="close" onclick="$('#create-material-form').modal('hide')" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="material-form" method="post" enctype="multipart/form-data" action="/create-material">
+                <form id="material-form" method="post" enctype="multipart/form-data" action="/create-material" onsubmit="return false">
                     @csrf
                     <div class="row">
                         <div class="col-6">
@@ -190,9 +207,21 @@
                                     <option value="none" selected disabled hidden>
                                         Select an Option
                                     </option>
-                                        @foreach ($categories as $row)
-                                            <option value="{{ $row['id'] }}" name="category">{{ $row['category_title'] }}</option>
-                                        @endforeach
+                                    <?php
+                                    $sql = "SELECT * FROM env_materials_categories";
+
+                                    if ($stmt = $pdo->prepare($sql)) {
+                                        if ($stmt->execute()) {
+
+                                            $rows = $stmt->fetchAll();
+
+                                            foreach ($rows as $row) {
+                                    ?>
+                                                <option value="<?= $row['category_id'] ?>" name="category"><?= $row['category_title'] ?></option>
+                                    <?php
+                                            }
+                                        }
+                                    } ?>
                                 </select>
                             </div>
                         </div>
@@ -249,8 +278,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="$('#create-material-form').modal('hide')">Close</button>
-                        <button id="material-form-btn" type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="material-form-btn" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -260,14 +289,14 @@
 
 <script>
     $(document).ready(function(e) {
-        $('#material-form').submit(function(e){
-            e.preventDefault();
+        /*Insert Record AJAX*/
+        $('#material-form-btn').on('click', (function(e) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
                 }
             });
-            var formData = new FormData(this);
+            var formData = new FormData($('#material-form')[0]);
             $.ajax({
                 type: 'POST',
                 url: $('#material-form').attr('action'),
@@ -275,47 +304,12 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                // "Data" is a JSON that contains the status of the save, the ID of the new record
-                // and the path of the uploaded image
                 success: function(data) {
                     //console.log("success");
                     if (data.status == "success") {
-                        // Hide the modal create form
-                        $('#create-material-form').modal('hide');
-                        // Reset the form fields
-                        $('#material-form')[0].reset();
-                        // Remove the preview image
-                        $('#image-view'). attr('src', '');
                         $(document).ready(function() {
                             sessionStorage.setItem("status", "success");
-                            // TODO: Dynamically adding data to the DataTable; consider transforming the entire TR data into a
-                            // component instead to prevent having to write HTML here in the future
-                            $('#inventoryTable').DataTable()
-                            .row
-                            .add([
-                                formData.get('material_code'),
-                                formData.get('material_name'),
-                                '<span class="text-black-50">'+formData.get('unit_price')+'</span>',
-                                '<span class="text-black-50">'+formData.get('total_amount')+'</span>',
-                                '<span class="text-black-50">'+formData.get('rm_status')+'</span>',
-                                "<span class='text-black-50 text-center w-100' style='display: inline-block'>"+
-                                "<a href='#' onclick=\"$('#image-view'). attr('src', 'storage/"+data.image+
-                                "')\" data-toggle=\"modal\" data-target=\"#exampleImage\">View</a>"+
-                                "</span>",
-                                '<ul class="list-inline m-0">'+
-                                    '<li class="list-inline-item">'+
-                                        '<button data-toggle="modal" data-target="#update-product-form" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">'+
-                                        '<i class="fa fa-edit"></i>'+
-                                        '</button>'+
-                                    '</li>'+
-                                    '<li class="list-inline-item">'+
-                                        '<button onclick="deleteMaterial('+data.id+')" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">'+
-                                        '<i class="fa fa-trash"></i>'+
-                                        '</button>'+
-                                    '</li>'+
-                                '</ul>'
-                            ])
-                            .draw();
+                            $('#divMain').load('/inventory');
                         });
                     }
                 },
@@ -324,49 +318,49 @@
                     console.log(data);
                 }
             });
-        });
+        }));
 
-        // /*Update Record AJAX*/
-        // $('#update-product-form-btn').on('click', (function(e) {
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
+        /*Update Record AJAX
+        $('#update-product-form-btn').on('click', (function(e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        //     e.preventDefault();
-        //     var formData = new FormData($('#edit-product-form')[0]);
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: $('#edit-product-form').attr('action'),
-        //         data: formData,
-        //         cache: false,
-        //         contentType: false,
-        //         processData: false,
-        //         success: function(data) {
-        //             if (data.status == "success") {
-        //                 $(document).ready(function() {
-        //                     sessionStorage.setItem("status", "success");
-        //                     $('#divMain').load('/item');
-        //                 });
-        //             } else {
-        //                 $(document).ready(function() {
-        //                     sessionStorage.setItem("status", "error");
-        //                     $('#divMain').load('/item');
-        //                 });
-        //             }
+            e.preventDefault();
+            var formData = new FormData($('#edit-product-form')[0]);
+            $.ajax({
+                type: 'POST',
+                url: $('#edit-product-form').attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.status == "success") {
+                        $(document).ready(function() {
+                            sessionStorage.setItem("status", "success");
+                            $('#divMain').load('/item');
+                        });
+                    } else {
+                        $(document).ready(function() {
+                            sessionStorage.setItem("status", "error");
+                            $('#divMain').load('/item');
+                        });
+                    }
 
-        //         },
-        //         error: function(data) {
-        //             console.log("error");
-        //             console.log(data);
-        //             $(document).ready(function() {
-        //                 sessionStorage.setItem("status", "error");
-        //                 $('#divMain').load('/item');
-        //             });
-        //         }
-        //     });
-        // }));
+                },
+                error: function(data) {
+                    console.log("error");
+                    console.log(data);
+                    $(document).ready(function() {
+                        sessionStorage.setItem("status", "error");
+                        $('#divMain').load('/item');
+                    });
+                }
+            });
+        }));*/
         /*Delete Product*/
     });
 

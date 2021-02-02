@@ -31,6 +31,6 @@ class EnvMaterialsCategories extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('env_raw_materials');
+        Schema::dropIfExists('env_materials_categories');
     }
 }

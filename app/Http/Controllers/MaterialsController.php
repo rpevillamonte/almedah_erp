@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use \App\Models\ManufacturingMaterials;
+use App\Models\MaterialCategory;
 use Illuminate\Http\Request;
 use DB;
 use Exception;
 
 class MaterialsController extends Controller
 {
+    function index(){
+        $raw_materials = ManufacturingMaterials::get();
+        $man_mats_categories = MaterialCategory::get();
+        return view('modules.inventory', [
+            'raw_materials' => $raw_materials,
+            'categories' => $man_mats_categories
+        ]);
+    }
 
     public function store(Request $request)
     {
-
         try {
             /* Insert Material Record to env_raw_materials table */
             $imagePath = request('material_image')->store('uploads', 'public');
@@ -27,7 +35,9 @@ class MaterialsController extends Controller
             $data->item_image = $imagePath;
             $data->save();
             return response()->json([
-                'status' => 'success'
+                'status' => 'success',
+                'image' => $imagePath,
+                'id' => $data->id
             ]);
         } catch (Exception $e) {
             return $e;

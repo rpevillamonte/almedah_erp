@@ -17,10 +17,10 @@ class CreateRawMatsTable extends Migration
         {
                 Schema::create('env_raw_materials', function (Blueprint $table) {
                 $table->id();
-                $table->string('material_code');
-                $table->string('material_name');
-                $table->string('material_image');
-                $table->string('material_category');
+                $table->string('item_code');
+                $table->string('item_name');
+                $table->string('item_image');
+                $table->string('category_id');
                 $table->float('unit_price');
                 $table->float('total_amount');
                 $table->string('rm_status');

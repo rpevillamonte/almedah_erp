@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MaterialsController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -38,16 +39,25 @@ Route::get('/item', function () {
     return view('modules.item');
 });
 
-Route::get('/inventory', function () {
-    return view('modules.inventory');
-});
+Route::get('/inventory', 'MaterialsController@index');
 
 
 /*PRODUCT POST METHOD*/
 Route::post('/create-product', 'ProductsController@store');
+
+/*DEBUGGING*/
+// Route::post('/create-product', function(Request $request){
+//     echo json_encode($request->all());
+// });
+
 Route::post('/create-material', 'MaterialsController@store');
 
 Route::patch('/update-product/{id}', 'ProductsController@update');
+
+/*DEBUGGING*/
+// Route::patch('/update-product/{id}', function(Request $request){
+//     echo json_encode($request->all());
+// });
 
 Route::post('/delete-product/{id}', 'ProductsController@delete');
 Route::post('/delete-material/{id}', 'MaterialsController@delete');
