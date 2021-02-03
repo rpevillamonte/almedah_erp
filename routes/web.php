@@ -30,11 +30,9 @@ Route::get('/dashboard', function () {
 
 Route::get('/manufacturing', function () {
     return view('modules.manufacturing');
-});
+}); 
 
-Route::get('/item', function () {
-    return view('modules.item');
-});
+Route::get('/item', 'ProductsController@index');
 
 Route::get('/inventory', function () {
     return view('modules.inventory');
@@ -45,7 +43,7 @@ Route::get('/inventory', function () {
 Route::post('/create-product', 'ProductsController@store');
 Route::post('/create-material', 'MaterialsController@store');
 
-Route::patch('/update-product/{id}', 'ProductsController@update');
+Route::patch('/update-product/{product_code}', 'ProductsController@update');
 
-Route::post('/delete-product/{id}', 'ProductsController@delete');
-Route::post('/delete-material/{id}', 'MaterialsController@delete');
+Route::post('/delete-product/{product_code}', 'ProductsController@delete');
+Route::post('/delete-material/{product_code}', 'MaterialsController@delete');

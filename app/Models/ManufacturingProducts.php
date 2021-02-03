@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ManufacturingProducts extends Model
 {
     use HasFactory;
-    protected $table = 'man_products';
+    protected $table = 'MAN_PRODUCTS';
+    protected $primaryKey = 'PRODUCT_CODE';
     public $timestamps = true;
     protected $fillable = [
         'product_code',
@@ -18,6 +19,7 @@ class ManufacturingProducts extends Model
         'sales_price_wt',
         'unit',
         'internal_description',
-        'bar_code'
+        'barcode',
+        'picture'
     ];
 }
