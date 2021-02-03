@@ -1,46 +1,3 @@
-<script>
-    function deleteMaterial(id) {
-        if (confirm("Are you sure?")) {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: 'delete-material/' + id,
-                data: null,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data.status == "success") {
-                        $(document).ready(function() {
-                            sessionStorage.setItem("status", "success");
-                            $('#divMain').load('/inventory');
-                        });
-                    } else {
-                        $(document).ready(function() {
-                            sessionStorage.setItem("status", "error");
-                            $('#divMain').load('/inventory');
-                        });
-                    }
-
-                },
-                error: function(data) {
-                    console.log("error");
-                    console.log(data);
-                    $(document).ready(function() {
-                        sessionStorage.setItem("status", "error");
-                        $('#divMain').load('/inventory');
-                    });
-                }
-            });
-        }
-        return false;
-    }
-</script>
 <div class="container mt-3 rounded">
     <div class="row d-flex justify-content-center">
 
@@ -65,6 +22,7 @@
                         </td> --}}
                         <td>Item Code</td>
                         <td>Item Name</td>
+                        <td>Category</td>
                         <td>Unit Price (PHP)</td>
                         <td>Total Amount</td>
                         <td>RM Status</td>
@@ -74,26 +32,26 @@
                 </thead>
                 <tbody>
                             @foreach ($raw_materials as $row)
-                                <tr>
+                                <tr id="row-{{ $row->id }}">
                                     {{-- <td>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input">
                                         </div>
                                     </td> --}}
-                                    <td>{{ $row["item_code"] }}</td>
-                                    <td>{{ $row['item_name'] }}</td>
-
-                                    <td class="text-black-50">{{ $row["unit_price"] }}</td>
-                                    <td class="text-black-50">{{ $row["total_amount"] }}</td>
-                                    <td class="text-black-50">{{ $row["rm_status"] }}</td>
+                                    <td>{{ $row->item_code }}</td>
+                                    <td>{{ $row->item_name }}</td>
+                                    <td>{{ $row->category->category_title }}</td>
+                                    <td class="text-black-50">{{ $row->unit_price }}</td>
+                                    <td class="text-black-50">{{ $row->total_amount }}</td>
+                                    <td class="text-black-50">{{ $row->rm_status }}</td>
                                     <td class="text-black-50 text-center"><a href='#' onclick="$('#image-view').attr('src', 'storage/{{ $row["item_image"] }}')" class="row-img-view-btn" data-toggle="modal" data-target="#exampleImage">View</a></td>
                                     <td class="">
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                <button data-toggle="modal" data-target="#update-product-form" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
+                                                <button data-id="{{ $row->id }}" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
                                             </li>
                                             <li class="list-inline-item">
-                                                <button onclick="deleteMaterial({{ $row['id'] }})" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash"></i></button>
+                                                <button data-id="{{ $row->id }}" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash"></i></button>
                                             </li>
                                         </ul>
                                     </td>
@@ -104,15 +62,20 @@
 
             <script>
                 $(document).ready(function() {
-                    $('#inventoryTable').dataTable({
-                        columnDefs: [{
-                            orderable: false,
-                            targets: 0
-                        }],
-                        order: [
-                            [1, 'asc']
-                        ]
-                    });
+                    // Added an if statement here in case it becomes necessary to turn
+                    // the datatable into a component and selectively render it based on
+                    // whether there are entries or not
+                    if($('#inventoryTable').length){
+                        $('#inventoryTable').dataTable({
+                            columnDefs: [{
+                                orderable: false,
+                                targets: 0
+                            }],
+                            order: [
+                                [1, 'asc']
+                            ]
+                        });
+                    }
                 });
             </script>
         </div>
@@ -138,11 +101,98 @@
     </div>
 </div>
 <!-- Edit Material Modal-->
-<div class="modal fade" id="update-material-form" tabindex="-1" aria-labelledby="updateModalForm" aria-hidden="true">
+<div class="modal fade" id="update-material-form-modal" tabindex="-1" aria-labelledby="updateModalForm" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title d-inline">Edit Material</h5>
+                <button type="button" class="close" onclick="$('#update-material-form-modal').modal('hide')" aria-label="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="update-material-form" action="#" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="">Material Code</label>
+                                <input class="form-control" type="text" id="material_code" name="material_code" placeholder="Ex. MT181204" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="">Material Name</label>
+                                <input class="form-control" type="text" id="material_name" name="material_name" required>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="">Material Categories</label>
+                                <select class="form-control" id="material_category" name="material_category" required>
+                                    <option value="" selected disabled hidden>
+                                        Select an Option
+                                    </option>
+                                        @foreach ($categories as $row)
+                                            <option value="{{ $row['id'] }}" name="category">{{ $row['category_title'] }}</option>
+                                        @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group p-2">
+                        <label for="">Image</label>
+                        <img id="img_tmp_edit" src="../images/thumbnail.png" style="width:100%;">
+                        <input class="form-control" type="file" name="material_image" onchange="readURL2(this);">
+                    </div>
+
+                    <script>
+                        function readURL2(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function(e) {
+                                    $('#img_tmp_edit')
+                                        .attr('src', e.target.result);
+                                };
+
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                    </script>
+
+                    <div class="form-group">
+                        <label for="">Unit Price</label>
+                        <input class="form-control" type="text" id="unit_price" name="unit_price" required placeholder="Ex. 100">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="">Total Amount</label>
+                        <input class="form-control" type="text" id="total_amount" name="total_amount" required placeholder="Ex. 500">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="">RM Status</label>
+                        <select class="form-control" id="rm_status" name="rm_status" required>
+                            <option value="" selected disabled hidden>
+                                Select an Option
+                            </option>
+                            <option value="To Purchase">To Purchase</option>
+                            <option value="Available">Available</option>
+                            <option value="Not Available">Not Available</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="$('#update-material-form-modal').modal('hide')">Close</button>
+                        <button id="update-material-form-modal-btn" type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -187,7 +237,7 @@
                             <div class="form-group">
                                 <label for="">Material Categories</label>
                                 <select class="form-control" name="material_category" required>
-                                    <option value="none" selected disabled hidden>
+                                    <option value="" selected disabled hidden>
                                         Select an Option
                                     </option>
                                         @foreach ($categories as $row)
@@ -234,18 +284,13 @@
                     <div class="form-group">
                         <label for="">RM Status</label>
                         <select class="form-control" name="rm_status" required>
-                            <option value="none" selected disabled hidden>
+                            <option value="" selected disabled hidden>
                                 Select an Option
                             </option>
                             <option value="To Purchase">To Purchase</option>
                             <option value="Available">Available</option>
                             <option value="Not Available">Not Available</option>
                         </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">Material Description</label>
-                        <textarea class="form-control" type="text" name="material_description"></textarea>
                     </div>
 
                     <div class="modal-footer">
@@ -260,6 +305,163 @@
 
 <script>
     $(document).ready(function(e) {
+        // Since we're dynamically loading more .edit-btn elements
+        // we need to bind the function to body clicks instead of .edit-btn clicks
+        // since functions bound to .edit-btn will only be bound to the elements
+        // that loaded first
+
+        //When clicking edit button
+        $('body').on('click', '.edit-btn', function(e){
+            e.preventDefault();
+            var element = this;
+            var id = element.dataset.id;
+            // Adding the ID to a variable accessible to the ajax call
+            sessionStorage.setItem('material-edit-id', id);
+            var form = $('#update-material-form');
+            var modal = $('#update-material-form-modal');
+            form.attr('action', '/update-material/'+id);
+
+            // Finding the element being edited and returning the details
+            $.get('/inventory/'+sessionStorage.getItem('material-edit-id'), function(data, status){
+                $('#material_name').val(data.item_name);
+                $('#material_code').val(data.item_code);
+                $('#material_category').val(data.category_id);
+                $('#img_tmp_edit').attr('src', 'storage/'+data.item_image);
+                sessionStorage.setItem('old_image', data.item_image);
+                $('#rm_status').val(data.rm_status);
+                $('#unit_price').val(data.unit_price);
+                $('#total_amount').val(data.total_amount);
+            });
+
+            modal.modal('show');
+        });
+        // When clicking delete button
+        $('body').on('click', '.delete-btn', function(e){
+            var id = this.dataset.id;
+            var row = $(this).parents('tr');
+            if (confirm("Are you sure?")) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: 'delete-material/' + id,
+                    data: null,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        if (data.status == "success") {
+                            $(document).ready(function() {
+                                sessionStorage.setItem("status", "success");
+                                // Removing a row from the data table
+                                var table = $('#inventoryTable');
+                                table.DataTable()
+                                     .row(row)
+                                     .remove()
+                                     .draw();
+                            });
+                        } else {
+                            $(document).ready(function() {
+                                sessionStorage.setItem("status", "error");
+                            });
+                        }
+                    },
+                    error: function(data) {
+                        console.log("error");
+                        console.log(data);
+                        $(document).ready(function() {
+                            sessionStorage.setItem("status", "error");
+                            $('#divMain').load('/inventory');
+                        });
+                    }
+                });
+            }
+            return false;
+        });
+
+        // Update form function
+        // When the form is submitted (save button is pressed and all the required fields are filled in)
+        // it deletes the row of the element being edited and adds a row with the updated values
+        $('#update-material-form').submit(function(e){
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: $('#update-material-form').attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    //console.log("success");
+                    if (data.status == "success") {
+                        // If a new image was set, use it as the value. Otherwise, use the old image
+                        var image = (data.image) ?  data.image : sessionStorage.getItem('old_image');
+                        sessionStorage.removeItem('old_image');
+                        // Hide the modal create form
+                        $('#update-material-form-modal').modal('hide');
+                        // Reset the preview image
+                        $('#img_tmp_edit').attr('src', '../images/thumbnail.png');
+                        // Reset the form fields
+                        $('#update-material-form')[0].reset();
+                        $(document).ready(function() {
+                            sessionStorage.setItem("status", "success");
+                            // Removing the old row
+                            $('#inventoryTable').DataTable()
+                                                .row($('#row-'+sessionStorage.getItem('material-edit-id')))
+                                                .remove()
+                                                .draw();
+                            // Adding the updated row
+                            $('#inventoryTable').DataTable()
+                            .row
+                            .add([
+                                formData.get('material_code'),
+                                formData.get('material_name'),
+                                data.category_title,
+                                '<span class="text-black-50">'+formData.get('unit_price')+'</span>',
+                                '<span class="text-black-50">'+formData.get('total_amount')+'</span>',
+                                '<span class="text-black-50">'+formData.get('rm_status')+'</span>',
+                                "<span class='text-black-50 text-center w-100' style='display: inline-block'>"+
+                                "<a href='#' onclick=\"$('#image-view'). attr('src', 'storage/"+image+
+                                "')\" data-toggle=\"modal\" data-target=\"#exampleImage\">View</a>"+
+                                "</span>",
+                                '<ul class="list-inline m-0">'+
+                                    '<li class="list-inline-item">'+
+                                        '<button data-id="'+data.id+'" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">'+
+                                        '<i class="fa fa-edit"></i>'+
+                                        '</button>'+
+                                    '</li>'+
+                                    '<li class="list-inline-item">'+
+                                        '<button data-id="'+data.id+'" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">'+
+                                        '<i class="fa fa-trash"></i>'+
+                                        '</button>'+
+                                    '</li>'+
+                                '</ul>'
+                            ])
+                            .node()
+                            .id = 'row-' + data.id;
+
+                            $('#inventoryTable').DataTable().draw();
+                                
+                        });
+                    }
+                },
+                error: function(data) {
+                    console.log("error");
+                    console.log(data);
+                }
+            });
+            return false;
+        })
+
         $('#material-form').submit(function(e){
             e.preventDefault();
             $.ajaxSetup({
@@ -290,11 +492,15 @@
                             sessionStorage.setItem("status", "success");
                             // TODO: Dynamically adding data to the DataTable; consider transforming the entire TR data into a
                             // component instead to prevent having to write HTML here in the future
+
+                            // NOTE: This is exactly the same as the markup for the <tr> tags above in string form.
+                            // Due to not being able to import templates in JavaScript, this is currently the best solution
                             $('#inventoryTable').DataTable()
                             .row
                             .add([
                                 formData.get('material_code'),
                                 formData.get('material_name'),
+                                data.category_title,
                                 '<span class="text-black-50">'+formData.get('unit_price')+'</span>',
                                 '<span class="text-black-50">'+formData.get('total_amount')+'</span>',
                                 '<span class="text-black-50">'+formData.get('rm_status')+'</span>',
@@ -304,18 +510,21 @@
                                 "</span>",
                                 '<ul class="list-inline m-0">'+
                                     '<li class="list-inline-item">'+
-                                        '<button data-toggle="modal" data-target="#update-product-form" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">'+
+                                        '<button data-id="'+data.id+'" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">'+
                                         '<i class="fa fa-edit"></i>'+
                                         '</button>'+
                                     '</li>'+
                                     '<li class="list-inline-item">'+
-                                        '<button onclick="deleteMaterial('+data.id+')" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">'+
+                                        '<button data-id="'+data.id+'" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">'+
                                         '<i class="fa fa-trash"></i>'+
                                         '</button>'+
                                     '</li>'+
                                 '</ul>'
                             ])
-                            .draw();
+                            .node()
+                            .id = 'row-' + data.id;
+
+                            $('#inventoryTable').DataTable().draw();
                         });
                     }
                 },

@@ -39,19 +39,21 @@ Route::get('/item', function () {
     return view('modules.item');
 });
 
-Route::get('/inventory', 'MaterialsController@index');
+Route::get('/inventory', 'MaterialsController@index')->name('inventory');
+Route::get('/inventory/{id}', 'MaterialsController@get')->name('inventory.specific');
 
 
 /*PRODUCT POST METHOD*/
 Route::post('/create-product', 'ProductsController@store');
+/*MATERIAL POST METHOD*/
+Route::post('/create-material', 'MaterialsController@store');
 
 /*DEBUGGING*/
 // Route::post('/create-product', function(Request $request){
 //     echo json_encode($request->all());
 // });
 
-Route::post('/create-material', 'MaterialsController@store');
-
+Route::patch('/update-material/{id}', 'MaterialsController@update')->name('material.update');
 Route::patch('/update-product/{id}', 'ProductsController@update');
 
 /*DEBUGGING*/

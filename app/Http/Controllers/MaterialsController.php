@@ -11,12 +11,17 @@ use Exception;
 class MaterialsController extends Controller
 {
     function index(){
-        $raw_materials = ManufacturingMaterials::get();
+        $raw_materials = ManufacturingMaterials::with('category')->get();
         $man_mats_categories = MaterialCategory::get();
         return view('modules.inventory', [
             'raw_materials' => $raw_materials,
             'categories' => $man_mats_categories
         ]);
+    }
+
+    function get($id){
+        $material_details = ManufacturingMaterials::with('category')->find($id);
+        return $material_details;
     }
 
     public function store(Request $request)
@@ -37,7 +42,8 @@ class MaterialsController extends Controller
             return response()->json([
                 'status' => 'success',
                 'image' => $imagePath,
-                'id' => $data->id
+                'id' => $data->id,
+                'category_title' => $data->category->category_title
             ]);
         } catch (Exception $e) {
             return $e;
@@ -53,26 +59,30 @@ class MaterialsController extends Controller
     {
         try {
             /* Update Product Record from man_products table */
-            $imagePath = request('picture')->store('uploads', 'public');
-            $form_data = $request->input();
             $data = ManufacturingMaterials::find($id);
-            $data->product_code = $form_data['product_code'];
-            $data->product_name = $form_data['product_name'];
-            $data->product_category = $form_data['product_category'];
-            $data->product_type = $form_data['product_type'];
-            $data->sales_price_wt = $form_data['sales_price_wt'];
-            $data->unit = $form_data['unit'];
-            $data->internal_description = $form_data['internal_description'];
-            $data->bar_code = $form_data['bar_code'];
-            $data->picture = $imagePath;
+            $imagePath = "";
+            if(request('material_image')){
+                $imagePath = request('material_image')->store('uploads', 'public');
+                $data->item_image = $imagePath;
+            }
+            $form_data = $request->input();
+            $data->item_code = $form_data['material_code'];
+            $data->item_name = $form_data['material_name'];
+            $data->category_id  = $form_data['material_category'];
+            $data->unit_price = $form_data['unit_price'];
+            $data->total_amount = $form_data['total_amount'];
+            $data->rm_status = $form_data['rm_status'];
             $data->save();
 
             return response()->json([
-                'status' => 'success'
+                'status' => 'success',
+                'image' => $imagePath,
+                'id' => $data->id,
+                'category_title' => $data->category->category_title
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'status' => 'failed'
+                'status' => 'failed ' . $e
             ]);
         }
     }
@@ -88,7 +98,7 @@ class MaterialsController extends Controller
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'status' => 'failed'
+                'status' => 'failed ' . $e
             ]);
         }
     }
