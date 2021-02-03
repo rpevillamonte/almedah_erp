@@ -14,50 +14,6 @@ try {
 
 ?>
 
-<script>
-    /*Delete Product*/
-    function deleteProduct(product_code) {
-        if (confirm("Are you sure?")) {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: 'delete-product/' + product_code,
-                data: null,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data.status == "success") {
-                        $(document).ready(function() {
-                            sessionStorage.setItem("status", "success");
-                            $('#divMain').load('/item');
-                        });
-                    } else {
-                        $(document).ready(function() {
-                            sessionStorage.setItem("status", "error");
-                            $('#divMain').load('/item');
-                        });
-                    }
-
-                },
-                error: function(data) {
-                    console.log("error");
-                    console.log(data);
-                    $(document).ready(function() {
-                        sessionStorage.setItem("status", "error");
-                        //$('#divMain').load('/item');
-                    });
-                }
-            });
-        }
-        return false;
-    }
-</script>
 <div class="container mt-3 rounded">
     <div class="row d-flex justify-content-center">
 
@@ -387,7 +343,7 @@ try {
                 </button>
             </div>
             <div class="modal-body">
-                <form id="edit-product-form" method="POST" enctype="x-www-form-urlencoded" action="/update-product/{{ $product->PRODUCT_CODE }}">
+                <form id="edit-product-form-{{ $product->PRODUCT_CODE }}" method="POST" enctype="x-www-form-urlencoded" action="/update-product/{{ $product->PRODUCT_CODE }}">
                     @csrf
                     @method('PATCH')
                     <div class="row">
@@ -512,18 +468,17 @@ try {
 
                     <div class="form-group p-2">
                         <label for="">Image</label>
-                        <img id="edit_img_tmp" src="storage/{{ $product->PICTURE }}" style="width:100%;">
-                        <input class="form-control" type="file" value="{{ $product->PICTURE }}" name="edit_picture" onchange="readURL2(this);" required>
+                        <img id="edit_img_tmp-{{ $product->PRODUCT_CODE }}" src="storage/{{ $product->PICTURE }}" style="width:100%;">
+                        <input class="form-control" type="file" value="{{ $product->PICTURE }}" name="edit_picture" onchange="readURL2(this, '{{ $product->PRODUCT_CODE }}');" required>
                     </div>
 
                     <script>
-                        function readURL2(input) {
+                        function readURL2(input, product_code) {
                             if (input.files && input.files[0]) {
                                 var reader = new FileReader();
 
                                 reader.onload = function(e) {
-                                    $('#edit_img_tmp')
-                                        .attr('src', e.target.result)
+                                    $('#edit_img_tmp-' + product_code).attr('src', e.target.result)
                                 };
 
                                 reader.readAsDataURL(input.files[0]);
@@ -612,7 +567,7 @@ try {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content'),
             }
         });
-        var formData = new FormData($('#edit-product-form')[0]);
+        var formData = new FormData($('#edit-product-form-' + product_code)[0]);
         $.ajax({
             type: 'POST',
             url: 'update-product/' + product_code,
@@ -634,18 +589,60 @@ try {
                 }
 
             },
-            /*error: function(data) {
+            error: function(data) {
                 console.log("error");
                 console.log(data);
                 $(document).ready(function() {
                     sessionStorage.setItem("status", "error");
                     $('#divMain').load('/item');
                 });
-            }*/
-            });
+            }
+        });
     }
     
-    
+    /*Delete Product*/
+    function deleteProduct(product_code) {
+        if (confirm("Are you sure?")) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: 'delete-product/' + product_code,
+                data: null,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.status == "success") {
+                        $(document).ready(function() {
+                            sessionStorage.setItem("status", "success");
+                            $('#divMain').load('/item');
+                        });
+                    } else {
+                        $(document).ready(function() {
+                            sessionStorage.setItem("status", "error");
+                            $('#divMain').load('/item');
+                        });
+                    }
+
+                },
+                error: function(data) {
+                    console.log("error");
+                    console.log(data);
+                    $(document).ready(function() {
+                        sessionStorage.setItem("status", "error");
+                        //$('#divMain').load('/item');
+                    });
+                }
+            });
+        }
+        return false;
+    }
+
     $(document).ready(function() {
         var status = sessionStorage.getItem("status");
         if (status == "success") {

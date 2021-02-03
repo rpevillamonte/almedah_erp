@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use \App\Models\ManufacturingProducts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ProductsController extends Controller
 {
@@ -16,21 +17,8 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'product_code' => 'required',
-        //     'product_name' => '',
-        //     'product_category' => '',
-        //     'product_type' => '',
-        //     'sales_price_wt' => '',
-        //     'unit' => '',
-        //     'internal_description' => '',
-        //     'bar_code' => ''
-        // ]);
         try {
-            //$form_data = $request->input();
-            //\App\Models\ManufacturingProducts::create($form_data);
-
-            /* Insert Product Record to man_products table */
+            /**Create Product Record into MAN_PRODUCTS table */
             $imagePath = request('picture')->store('storage', 'public');
 
             $form_data = $request->input();
@@ -53,7 +41,6 @@ class ProductsController extends Controller
             return $e;
         }
 
-        //dd(request()->all());
     }
 
     public function update(Request $request, $product_code)
@@ -62,8 +49,6 @@ class ProductsController extends Controller
             /* Update Product Record from man_products table */
             $imagePath = request('edit_picture');
             $form_data = $request->input();
-            if(empty($form_data))
-                dd($form_data);
             $data = ManufacturingProducts::find($product_code);
             $data->product_code = $form_data['edit_product_code'];
             $data->product_name = $form_data['edit_product_name'];
@@ -94,6 +79,9 @@ class ProductsController extends Controller
         try {
             /* Delete Product Record from man_products table */
             $data = ManufacturingProducts::find($product_code);
+            if(File::exists(public_path($data->picture))){
+                File::delete(public_path($data->picture));
+            }
             $data->delete();
             return response()->json([
                 'status' => 'success'
