@@ -47,6 +47,8 @@ Route::get('/inventory/{id}', 'MaterialsController@get')->name('inventory.specif
 Route::post('/create-product', 'ProductsController@store');
 /*MATERIAL POST METHOD*/
 Route::post('/create-material', 'MaterialsController@store');
+/*MATERIAL CATEGORY POST METHOD*/
+Route::post('/create-categories' , 'MaterialsController@storeCategory');
 
 /*DEBUGGING*/
 // Route::post('/create-product', function(Request $request){

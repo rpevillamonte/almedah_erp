@@ -14,7 +14,7 @@ class MaterialCategory extends Model
         'description',
         'quantity'
     ];
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function materials(){
         return $this->hasMany(ManufacturingMaterials::class, 'category_id');
