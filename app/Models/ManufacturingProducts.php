@@ -13,7 +13,7 @@ class ManufacturingProducts extends Model
     protected $fillable = [
         'product_code',
         'product_name',
-        'product_category',
+        'product_status',
         'product_type',
         'sales_price_wt',
         'unit',

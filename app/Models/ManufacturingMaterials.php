@@ -19,4 +19,8 @@ class ManufacturingMaterials extends Model
         'total_amount',
         'rm_status'
     ];
+    public function category()
+    {
+        return $this->belongsTo(MaterialCategory::class, 'category_id');
+    }
 }

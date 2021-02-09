@@ -10,8 +10,10 @@
 
     <title>{{ config('app.name', 'ALMEDAH ERP') }}</title>
 
-    <!-- Scripts -->
-    <!--<script src="{{ asset('js/app.js') }}" defer></script>-->
+
+
+
+
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
@@ -24,12 +26,19 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 
+
+
     <!-- Custom Styles CSS-->
     <!--<link href="{{ asset('css/app.css')}}" rel="stylesheet">-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/custom-sidenav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom-inbox.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom-inventory.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom-main.css') }}">
+
+    <!-- Select Tag w/ Search Scripts Plugin-->
+    <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
 
 
     <!-- Custom JS CDN-->

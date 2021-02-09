@@ -79,6 +79,16 @@
             <!-- Submenu Manufacturing content -->
             <div id='submenuManufacturing' class="collapse sidebar-submenu">
                 <a href="#" id="inbox-toggle" class="menu list-group-item list-group-item-action bg-secondary">
+                    <span class="menu-collapsed align-middle">Item</span>
+                </a>
+            </div>
+            <div id='submenuManufacturing' class="collapse sidebar-submenu">
+                <a href="#" id="inbox-toggle" class="menu list-group-item list-group-item-action bg-secondary">
+                    <span class="menu-collapsed align-middle">Inventory</span>
+                </a>
+            </div>
+            <div id='submenuManufacturing' class="collapse sidebar-submenu">
+                <a href="#" id="inbox-toggle" class="menu list-group-item list-group-item-action bg-secondary">
                     <span class="menu-collapsed align-middle">BOM</span>
                 </a>
             </div>
@@ -87,11 +97,7 @@
                     <span class="menu-collapsed align-middle">Production</span>
                 </a>
             </div>
-            <div id='submenuManufacturing' class="collapse sidebar-submenu">
-                <a href="#" id="inbox-toggle" class="menu list-group-item list-group-item-action bg-secondary">
-                    <span class="menu-collapsed align-middle">Inventory</span>
-                </a>
-            </div>
+
             <!-- End of Submenu Manufacturing content -->
             <!-- Menu Item Buying -->
             <a href="#submenuBuying" data-toggle="collapse" aria-expanded="false" class="bg-dark  list-group-item list-group-item-action flex-column align-items-start">

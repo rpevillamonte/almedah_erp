@@ -173,7 +173,7 @@
                     <div class="row no-gutters align-items-center">
                         <a href="#submenuManufacturing" data-toggle="collapse" class="menu btn btn-outline-secondary btn-lg btn-block text-black btn-shadow py-3">
                             <strong>
-                                <i class="fas fa-tools" aria-hidden="true"></i><span class="ml-3">MANUFACTURING</span>
+                                <i class="fas fa-tools" aria-hidden="true"></i><span class="ml-3">ITEM</span>
                             </strong>
                         </a>
                     </div>
