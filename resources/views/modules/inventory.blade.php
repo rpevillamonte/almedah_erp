@@ -3,7 +3,6 @@ define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_NAME', 'almedah_erp_db');
-
 try {
     $pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -90,38 +89,34 @@ try {
                 <tbody>
                     <?php
                     $sql = "SELECT * FROM env_raw_materials";
-
                     if ($stmt = $pdo->prepare($sql)) {
                         if ($stmt->execute()) {
-
                             $rows = $stmt->fetchAll();
-
                             foreach ($rows as $row) {
                     ?>
-                                <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input">
-                                        </div>
-                                    </td>
-                                    <td><?= $row["item_code"] ?></td>
-                                    <td><?= $row["item_name"] ?></td>
-
-                                    <td class="text-black-50"><?= $row["unit_price"] ?></td>
-                                    <td class="text-black-50"><?= $row["total_amount"] ?></td>
-                                    <td class="text-black-50"><?= $row["rm_status"] ?></td>
-                                    <td class="text-black-50 text-center"><a href='#' onclick="$('#image-view').attr('src', 'storage/<?= $row["item_image"] ?>')" data-toggle="modal" data-target="#exampleImage">View</a></td>
-                                    <td class="">
-                                        <ul class="list-inline m-0">
-                                            <li class="list-inline-item">
-                                                <button data-toggle="modal" data-target="#update-product-form" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <button onclick="deleteMaterial(<?= $row["id"] ?>)" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash"></i></button>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input">
+                                    </div>
+                                </td>
+                                <td><?=$row["item_code"]?></td>
+                                <td><?=$row["item_name"]?></td>
+                                <td class="text-black-50"><?=$row["unit_price"]?></td>
+                                <td class="text-black-50"><?=$row["total_amount"]?></td>
+                                <td class="text-black-50"><?=$row["rm_status"]?></td>
+                                <td class="text-black-50 text-center"><a href='#' onclick="$('#image-view').attr('src', 'storage/<?=$row['item_image']?>')" data-toggle="modal" data-target="#exampleImage">View</a></td>
+                                <td class="">
+                                    <ul class="list-inline m-0">
+                                        <li class="list-inline-item">
+                                            <button data-toggle="modal" data-target="#update-product-form" class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
+                                        </li>
+                                        {{-- <li class="list-inline-item">
+                                            <button onclick="deleteMaterial(<?=$row['id']?>)" class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash"></i></button>
+                                        </li> --}}
+                                    </ul>
+                                </td>
+                            </tr>
                     <?php
                             }
                         }

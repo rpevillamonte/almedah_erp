@@ -12,10 +12,14 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-
+    'socialite' => [
+        'drivers' => [
+            'google',
+        ],
+    ],
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'env_employees',
     ],
 
     /*
@@ -38,12 +42,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'env_employees',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'env_employees',
             'hash' => false,
         ],
     ],
@@ -70,7 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'env_employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employee::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -99,6 +106,11 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'env_employees' => [
+            'provider' => 'customusers',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ]
     ],
 
     /*

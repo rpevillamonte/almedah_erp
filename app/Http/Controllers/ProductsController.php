@@ -69,7 +69,7 @@ class ProductsController extends Controller
             $data->bar_code = $form_data['bar_code'];
             $data->picture = $imagePath;
             $data->save();
-
+            
             return response()->json([
                 'status' => 'success'
             ]);

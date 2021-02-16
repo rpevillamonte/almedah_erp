@@ -90,9 +90,9 @@
                                     Quick Access
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="/incoming">
+                                    <a class="dropdown-item" href="/home">
                                         <!--<i class="fas fa-arrow-alt-circle-down" aria-hidden="true"></i>-->
-                                        <span class="nav-labels">MENU 1</span>
+                                        <span class="nav-labels">Home</span>
                                     </a>
                                     <a class="dropdown-item" href="/outgoing">
                                         <!--<i class="fas fa-arrow-alt-circle-down" aria-hidden="true"></i>-->
@@ -128,11 +128,14 @@
 
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle text-dark" id="navbarDropdownMenuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar " src="https://ko-pro.s3.amazonaws.com/8/Profile-Pics.jpg" width="36px" height="36px">
-                            {{ Auth::user()->name }}
+                            <img class="user-avatar " src="{{ asset('storage/'.auth()->user()->profile_picture) }}" onerror='this.onerror=null;this.src="{{ auth()->user()->profile_picture }}"' width="36px" height="36px">
+                            {{ auth()->user()->first_name }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('profile') }}" >
+                                {{ __('Profile') }}
+                            </a>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
@@ -149,7 +152,7 @@
             </div>
 
         </nav>
-        <main class="pt-2">
+        <main>
             @yield('content')
         </main>
         <!--
