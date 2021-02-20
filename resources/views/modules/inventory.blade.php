@@ -159,7 +159,7 @@
                                             {{ $row['category_title'] }}</option>
                                     @endforeach
                                     <option id="newCategoryButton">
-                                        Add new Category
+                                        + Add new Category
                                     </option>
 
                                 </select>
@@ -228,7 +228,7 @@
 
 
 <!-- Add Material Modal -->
-<div class="modal fade" id="create-material-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="create-material-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -276,7 +276,7 @@
                                             {{ $row['category_title'] }}</option>
                                     @endforeach
                                     <option id="newCategoryButton">
-                                        Add new Category
+                                       + Add new Category
                                     </option>
                                 </select>
                             </div>
@@ -348,7 +348,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Categories</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" onclick="closeCategory()" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -486,6 +486,8 @@
                 }
             });
             var formData = new FormData(this);
+            var material_category = document.getElementById('material_category1').value
+            formData.append('material_category', material_category)
             $.ajax({
                 type: 'POST',
                 url: $('#update-material-form').attr('action'),
@@ -571,6 +573,9 @@
                 }
             });
             var formData = new FormData(this);
+            //Gets material category id idk why its not getting inside the form data
+            var material_category = document.getElementById('material_category1').value
+            formData.append('material_category', material_category)
             $.ajax({
                 type: 'POST',
                 url: $('#material-form').attr('action'),
@@ -661,10 +666,9 @@
                 // "Data" is a JSON that contains the status of the save, the ID of the new record
                 // and the path of the uploaded image
                 success: function(data) {
-
-                    $('#add-Category-form').modal('hide');
                     // Hide the modal create form
-                    $('#create-material-form').modal('show');
+                    $('#add-Category-form').modal('hide');
+                    
                     // Add it to the categories
 
                     $('#material_category').prepend($('<option>', {
@@ -753,14 +757,13 @@
 
 <script>
     function openCategory(value) {
-        if (value == "Add new Category") {
+        if (value == "+ Add new Category") {
             $('#create-material-form').modal('hide');
             $('#add-Category-form').modal('show');
         }
     }
 
     function closeCategory() {
-        $('#create-material-form').modal('show');
         $('#add-Category-form').modal('hide');
     }
 
