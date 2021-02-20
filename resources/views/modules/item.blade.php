@@ -532,16 +532,6 @@ try {
                         </div>
 
                     </div>
-
-
-
-
-
-
-
-
-
-
                     <div class="form-group">
                         <label for="">Item Description</label>
                         <textarea class="form-control" type="text" id="internal_description" name="internal_description"></textarea>

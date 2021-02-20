@@ -36,6 +36,10 @@ Route::get('/item', function () {
     return view('modules.item');
 });
 
+Route::get('/newbom', function () {
+    return view('modules.newbom');
+});
+
 // Route::get('/inventory', function () {
 //     return view('modules.inventory');
 // });
@@ -57,3 +61,8 @@ Route::get('/inventory/{id}', 'MaterialsController@get')->name('inventory.specif
 Route::post('/delete-material/{id}', 'MaterialsController@delete');
 Route::patch('/update-material/{id}', 'MaterialsController@update')->name('material.update');
 Route::patch('/update-product/{id}', 'ProductsController@update');
+
+/*BOM TABLE ROUTE*/
+Route::post('/createBOM', 'BOMController@store');
+Route::get('/search-product/{product_code}', 'BOMController@search_product');
+Route::get('/bom', 'BOMController@index');
