@@ -129,7 +129,7 @@
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle text-dark" id="navbarDropdownMenuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="user-avatar " src="{{ asset('storage/'.auth()->user()->profile_picture) }}" onerror='this.onerror=null;this.src="{{ auth()->user()->profile_picture }}"' width="36px" height="36px">
-                            {{ auth()->user()->first_name }}
+                            {{ auth()->user()->firstname }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

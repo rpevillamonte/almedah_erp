@@ -26,7 +26,7 @@ try {
 
             <div class="row pb-2">
                 <div class="col-12 text-right">
-                    <p><button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#create-employee-modal"><i class="fas fa-plus" aria-hidden="true"></i> Add New</button></p>
+                    <p><button type="button" class="btn btn-outline-primary btn-sm" onclick='$("#create-employee-modal").modal("toggle");'><i class="fas fa-plus" aria-hidden="true"></i> Add New</button></p>
                 </div>
             </div>
             <div class="employeedata">
@@ -41,8 +41,8 @@ try {
                             <td>Image</td>
                             <td>Contact Number</td>
                             <td>Email</td>
-                            <td>Active Status</td>
                             <td class="d-none"></td>
+                            <td>Active Status</td>
                             <td>Action</td>
                         </tr>
                     </thead>
@@ -54,15 +54,16 @@ try {
                                 $rows = $stmt->fetchAll();
                                 foreach ($rows as $row) {
                         ?>
-                                <tr>
+                                <tr id="<?=$row["id"]?>">
                                     <td class="text-black-50"><?=$row["id"]?></td>
                                     <td class="text-black-50"><?=$row["last_name"]?></td>
                                     <td class="text-black-50"><?=$row["first_name"]?></td>
                                     <td class="text-black-50"><?=$row["position"]?></td>
                                     <td class="text-black-50"><?=$row["gender"]?></td>
-                                    <td><img src="storage/<?=$row['profile_picture']?>" class="modal-image" height="30" style="border-radius: 50%;" onError="this.onerror=null;this.src='images/defaultuser.png';"></td>
+                                    <td><img src="storage/<?=$row['profile_picture']?>" class="employee-modal-image" height="30" style="border-radius: 50%;" onError="this.onerror=null;this.src='images/defaultuser.png';"></td>
                                     <td class="text-black-50"><?=$row["contact_number"]?></td>
                                     <td class="text-black-50"><?=$row["email"]?></td>
+                                    <td class="d-none"><?=$row["active_status"]?></td>
                                     <?php
                                         if($row['active_status']){
                                     ?>
@@ -73,18 +74,19 @@ try {
                                     <?php
                                         }
                                     ?>
+
                                     <?php
                                         if(!$row['active_status']){
                                     ?>
                                     <td><div class="custom-control custom-switch">
-                                        <input class="custom-control-input toggle" type="checkbox" id="<?=$row['id']?>" value="<?=$row['active_status']?>">
-                                        <label class="custom-control-label" for="<?=$row['id']?>"></label>
+                                        <input class="custom-control-input toggle" type="checkbox" id="<?=$row['email']?>" value="<?=$row['active_status']?>">
+                                        <label class="custom-control-label" for="<?=$row['email']?>"></label>
                                     </div></td>
                                     <?php
                                         }
                                     ?>
-                                    <td class="d-none"><?=$row["active_status"]?></td>
-                                    <td class="">
+
+                                    <td>
                                         <a href="#" class="btn btn-success btn-sm rounded-0 editBtn" type="button"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
@@ -152,12 +154,12 @@ try {
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name='email' placeholder="example@gmail.com" required>
                     </div> --}}
-                    {{-- <div class="mb-3 employeeStatus">
+                    <div class="mb-3 employeeStatus">
                     
-                    </div> --}}
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="update-employee-form-btn" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                        <button type="submit" id="update-employee-form-btn" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -166,7 +168,7 @@ try {
 </div>
 
 {{-- Add employee Modal --}}
-<div class="modal fade" id="create-employee-modal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true" onclick='$("#create-employee-modal").modal("hide");'>
+<div class="modal fade" id="create-employee-modal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -180,7 +182,7 @@ try {
                     @csrf
                     <div class="mb-3">
                         <label for="last_name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" name='last_name' id="last_name" placeholder="Last Name">
+                        <input type="text" class="form-control" name='last_name' id="last_name" placeholder="Last Name" required>
                     </div>
                     <div class="mb-3">
                         <label for="first_name" class="form-label">First Name</label>
@@ -210,7 +212,7 @@ try {
                     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="create-employee-form-btn" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                        <button type="submit" id="create-employee-form-btn" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -224,9 +226,10 @@ try {
             {
                 orderable: false,
                 targets: 0,
+                "defaultContent": "",
+                 "targets": "_all"
             },
         ],
-        order: [[1, "asc"]],
         columns: [
             { visible: true }, //col 1
             { visible: true }, //col 2
@@ -236,11 +239,38 @@ try {
             { visible: true }, //col 6
             { visible: true }, //col 7
             { visible: true }, //col 8
-            { visible: true }, //col 9
-            { visible: false }, //col 10
+            null, //col 9
+            { visible: true }, //col 10
             { visible: true }, //col 11
         ],
     });
     var url = "js/env-employee.js";
     $.getScript(url);
+</script>
+<script>
+    $(".toggle").on("click", function (e) {
+        console.log("what");
+        $tr = $(this).closest("tr");
+        var data = $tr
+            .children("td")
+            .map(function () {
+                return $(this).text();
+            })
+            .get();
+        let statValue = $("#" + data[0]).val();
+        $("#" + data[0]).attr("checked", true);
+        $("#" + data[0]).prop("disabled", true);
+        if (statValue == 0) statValue = 1;
+        $.ajax({
+            url: "/update-employee-status/" + data[0] + "/" + statValue,
+            type: "PUT",
+            data: { statValue: statValue, id: data[0] },
+            success: function (response) {
+                successNotification("Account has been Activated!");
+            },
+            error: function (req, err) {
+                dangerNotification("Error!");
+            },
+        });
+    });
 </script>

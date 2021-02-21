@@ -13,8 +13,8 @@ class CustomerController extends Controller
                 'email_address' => 'required|unique:man_customers,email_address'
             ]);
             $form_data = $request->input();
-            \App\Models\Customer::create($form_data);
-            return response('Successfully added a customer!');
+            $data = \App\Models\Customer::create($form_data);
+            return response($data);
         } catch (Exception $e) {
             return $e;
         }
@@ -31,11 +31,9 @@ class CustomerController extends Controller
             $customer->address = $request->input('address');
             $customer->company_name = $request->input('company_name');
             $customer->save();
-            return response('Customer Updated!');
+            return response($customer);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => 'failed'
-            ]);
+            return response('There was an error upon updating!');
         }
     }
 }

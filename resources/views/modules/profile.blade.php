@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="modal fade" id="update-employee-modal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+<div class="modal fade" id="update-employee-modal" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel2">Update Employee</h5>
+                <h5 class="modal-title" id="exampleModalLabel4">Update Employee</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="update-employee-form">
+                <form id="update-profile-form">
                     @csrf
                     @method('PUT')
                     <input hidden id="id" value="{{ auth()->user()->id }}">
@@ -68,7 +68,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="update-employee-image-form-btn" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+                        <button type="submit" id="update-employee-image-form-btn" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -84,15 +84,17 @@
         <div class="alert alert-danger alert-dismissible" id="employee-danger" style="display:none;">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
         </div>
-        <img class="profile_picture" src="{{ asset('storage/'.auth()->user()->profile_picture) }}" onerror='this.onerror=null;this.src="{{ auth()->user()->profile_picture }}"' height="200" style="border-radius: 50%;" data-toggle="modal" data-target="#update-employee-image-modal"><br>
-        <button class="btn btn-sm btn-dark mt-2" data-toggle="modal" data-target="#update-employee-modal">Edit Profile</button>
-        <div class="my-4">
+        <div id="img-load">
+            <img class="profile_picture mb-3" src="{{ asset('storage/'.auth()->user()->profile_picture) }}" onerror='this.onerror=null;this.src="{{ auth()->user()->profile_picture }}"' height="200" style="border-radius: 50%;" onclick='$("#update-employee-image-modal").modal("toggle");'>
+        </div>
+        <button class="btn btn-sm btn-dark mt-2" onclick='$("#update-employee-modal").modal("toggle");'>Edit Profile</button>
+        <div class="my-4" id="profile-load">
             <h3 class="media-heading text-dark mb-2">{{ auth()->user()->last_name }} {{ auth()->user()->first_name }} </h3>
-            <p class="my-1"><strong>User ID: </strong>{{ auth()->user()->id }}</p>
-            <p class="my-1"><strong>Position: </strong>{{ auth()->user()->position }} </p>
-            <p class="my-1"><strong>Email Address: </strong>{{ auth()->user()->email }} </p>
-            <p class="my-1"><strong>Contact Number: </strong>{{ auth()->user()->contact_number }} </p>
-            <p class="mt-1"><strong>Joined Almedah: </strong>{{ auth()->user()->created_at->format('F Y') }}</p>
+            <p class="my-1"><span class="font-weight-bold">User ID: </span>{{ auth()->user()->id }}</p>
+            <p class="my-1"><span class="font-weight-bold">Position: </span>{{ auth()->user()->position }} </p>
+            <p class="my-1"><span class="font-weight-bold">Email Address: </span>{{ auth()->user()->email }} </p>
+            <p class="my-1"><span class="font-weight-bold">Contact Number: </span>{{ auth()->user()->contact_number }} </p>
+            <p class="mt-1"><span class="font-weight-bold">Joined Almedah: </span>{{ auth()->user()->created_at->format('F Y') }}</p>
         </div>
     </div>
 </div>

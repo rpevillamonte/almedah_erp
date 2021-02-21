@@ -40,11 +40,11 @@ class EmployeeController extends Controller
             $employee->gender = $request->input('gender');
             $employee->contact_number = $request->input('contact_number');
 
-            // if(!($request->input('active_status')==null)){
-            //     $employee->active_status = $request->input('active_status');
-            // }
+            if(!($request->input('active_status')==null)){
+                $employee->active_status = $request->input('active_status');
+            }
             $employee->save();
-            return response('Employee Successfully Updated!');
+            return response($employee);
         } catch (Exception $e) {
             return response('There was an error upon updating!');
         }
@@ -55,13 +55,12 @@ class EmployeeController extends Controller
         try {
             $employee = Employee::where('id', $id)->first();
             $file = $request->hasFile('profile_picture');
-            // $imagePath = request('profile_picture')->store('uploads', 'public');
             if($request->hasFile('profile_picture')){
                 $imagePath = request('profile_picture')->store('uploads', 'public');
                 $employee->profile_picture = $imagePath;
             }
             $employee->save();
-            return response('Employee Successfully Updated!');
+            return response($imagePath);
         } catch (Exception $e) {
             return response('There was an error upon updating!');
         }
@@ -80,4 +79,5 @@ class EmployeeController extends Controller
             ]);
         }
     }
+
 }

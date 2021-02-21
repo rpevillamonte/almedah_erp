@@ -19,32 +19,56 @@ function successNotification(text) {
 function readURL1(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
         reader.onload = function (e) {
             $("#img_tmp").attr("src", e.target.result);
         };
-
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-$("#update-employee-form-btn").on("click", function (e) {
+$("#update-profile-form").on("submit", function (e) {
+    console.log("clicked");
     e.preventDefault;
     var id = $("#id").val();
     $.ajax({
         type: "PUT",
         url: "/update-employee/" + id,
-        data: $("#update-employee-form").serialize(),
+        data: $("#update-profile-form").serialize(),
         success: function (response) {
-            successNotification(response);
-            $("#update-employee-modal").modal("hide");
-            $("#update-employee-form")[0].reset();
+            $("#profile-load").html(
+                `
+                <h3 class="media-heading text-dark mb-2">` +
+                    response["last_name"] +
+                    " " +
+                    response["first_name"] +
+                    `</h3>
+                <p class="my-1"><span class="font-weight-bold">User ID: </span>` +
+                    response["id"] +
+                    `</p>
+                <p class="my-1"><span class="font-weight-bold">Position: </span>` +
+                    response["position"] +
+                    ` </p>
+                <p class="my-1"><span class="font-weight-bold">Email Address: </span>` +
+                    response["email"] +
+                    ` </p>
+                <p class="my-1"><span class="font-weight-bold">Contact Number: </span>` +
+                    response["contact_number"] +
+                    ` </p>
+                <p class="mt-1"><span class="font-weight-bold">Joined Almedah: </span>` +
+                    response["created_at"] +
+                    `</p>
+                `
+            );
+            successNotification("Profile successfully updated!");
+            $("#update-employee-modal").modal("toggle");
+            $("#update-profile-form")[0].reset();
+            window.stop();
         },
         error: () => dangerNotification("There was an error upon updating!"),
     });
 });
 
-$("#update-employee-image-form-btn").on("click", function (e) {
+$("#update-employee-image-form").on("submit", function (e) {
     e.preventDefault();
     var id = $("#id").val();
     var formData = new FormData($("#update-employee-image-form")[0]);
@@ -56,14 +80,11 @@ $("#update-employee-image-form-btn").on("click", function (e) {
         contentType: false,
         processData: false,
         success: function (response) {
-            successNotification(response);
-            $("#update-employee-image-modal").modal("hide");
+            successNotification("Profile successfully updated!");
+            $("#update-employee-image-modal").modal("toggle");
             $("#update-employee-image-form")[0].reset();
+            window.location.reload();
         },
         error: () => dangerNotification("There was an error upon updating!"),
     });
-});
-
-$(".profile_picture").on("click", function () {
-    console.log("hotdog");
 });

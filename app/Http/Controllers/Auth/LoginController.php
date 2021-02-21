@@ -66,8 +66,8 @@ class LoginController extends Controller
         } else {
             // create a new employee
             $newUser                  = new Employee;
-            $newUser->last_name       = $user['given_name'];
-            $newUser->first_name      = $user['family_name'];
+            $newUser->last_name       = $user['family_name'];
+            $newUser->first_name      = $user['given_name'];
             $newUser->position        = '';
             $newUser->gender          = 'Male';
             $newUser->profile_picture = $user->avatar;
