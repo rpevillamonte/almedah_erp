@@ -60,7 +60,7 @@ class MaterialsController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            /* Update Product Record from man_products table */
+            /* Update Product Record from env_raw_materials table */
             $data = ManufacturingMaterials::find($id);
             $imagePath = "";
             if (request('material_image')) {

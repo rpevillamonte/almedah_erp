@@ -111,9 +111,3 @@ function openItemInfo() {
     $('#contentInventory').load('modules/itemInfo.php');
   });
 }
-
-function loadInv() {
-    $(document).ready(function () {
-    $('#contentInventory').load('modules/inventory.php');
-  });
-}

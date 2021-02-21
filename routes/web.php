@@ -42,18 +42,22 @@ Route::get('/item', function () {
 
 
 /*PRODUCTS TABLE ROUTE*/
+Route::get('/item','ProductsController@index');
+Route::get('/get-attribute/{id}', 'ProductsController@get_attribute');
 Route::patch('/create-product', 'ProductsController@store');
 Route::patch('/update-product/{id}', 'ProductsController@update');
 Route::post('/delete-product/{id}', 'ProductsController@delete');
 Route::post('/create-item-group', 'ProductsController@add_item_group');
 Route::post('/create-product-unit', 'ProductsController@add_product_unit');
 Route::post('/create-attribute', 'ProductsController@add_attribute');
-Route::get('/get-attribute/{id}', 'ProductsController@get_attribute');
 
 /*RAW MATERIALS TABLE ROUTE*/
 Route::get('/inventory', 'MaterialsController@index')->name('inventory');
-Route::post('/create-material', 'MaterialsController@store');
 Route::get('/inventory/{id}', 'MaterialsController@get')->name('inventory.specific');
+Route::post('/create-material', 'MaterialsController@store');
 Route::post('/delete-material/{id}', 'MaterialsController@delete');
 Route::patch('/update-material/{id}', 'MaterialsController@update')->name('material.update');
 Route::patch('/update-product/{id}', 'ProductsController@update');
+
+Route::get('/test', 'DebugController@index');
+Route::post('/test', 'DebugController@debug');

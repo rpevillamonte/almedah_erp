@@ -171,7 +171,7 @@
 
 
                     <div class="form-group">
-                        <label for="">Total Amount</label>
+                        <label for="">Total Quantity</label>
                         <input class="form-control" type="text" id="total_amount" name="total_amount" required placeholder="Ex. 500">
                     </div>
 
@@ -450,7 +450,12 @@
                                 .id = 'row-' + data.id;
 
                             $('#inventoryTable').DataTable().draw();
-
+                            if($('#materials-picker').length){
+                                updatedMaterial(data.id, 
+                                                formData.get('total_amount'),
+                                                formData.get('material_name')
+                                                );
+                            }
                         });
                     }
                 },
@@ -525,6 +530,21 @@
                                 .id = 'row-' + data.id;
 
                             $('#inventoryTable').DataTable().draw();
+                            // If the materials picker exists, append the new option
+                            // Note: must find a better way to let item.blade.php know that
+                            //       a new item has been added to prevent having mark-ups mixed
+                            //       together
+                            if($('#materials-picker').length){
+                                $('#materials').append(
+                                    "<option value=\""+data.id+"\">"+formData.get('material_name')+"</option>"
+                                );
+                                $('#materials').selectpicker('refresh');
+                                $('#materials-picker').append(
+                                    "<input id='raw_"+data.id+"' type='text' value='"+formData.get('total_amount')+"' hidden>"
+                                );
+                            }else{
+                                console.log("PICKER ISN'T HERE");
+                            }
                         });
                     }
                 },

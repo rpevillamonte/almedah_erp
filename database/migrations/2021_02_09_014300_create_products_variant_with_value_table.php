@@ -17,7 +17,7 @@ class CreateProductsVariantWithValueTable extends Migration
             $table->id();
             $table->bigInteger('product_id');
             $table->string('attribute');
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
         });
     }
