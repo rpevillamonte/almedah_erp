@@ -94,10 +94,9 @@
             </div>
             <div id='submenuManufacturing' class="collapse sidebar-submenu">
                 <a href="#" id="inbox-toggle" class="menu list-group-item list-group-item-action bg-secondary">
-                    <span class="menu-collapsed align-middle">Production</span>
+                    <span class="menu-collapsed align-middle">Customer</span>
                 </a>
             </div>
-
             <!-- End of Submenu Manufacturing content -->
             <!-- Menu Item Buying -->
             <a href="#submenuBuying" data-toggle="collapse" aria-expanded="false" class="bg-dark  list-group-item list-group-item-action flex-column align-items-start">
@@ -275,7 +274,7 @@
             <!-- End of Menu Item HR -->
             <!-- Submenu Item HR -->
             <div id='submenuHR' class="collapse sidebar-submenu">
-                <a href="#" class="list-group-item list-group-item-action bg-secondary">
+                <a href="#" class="menu list-group-item list-group-item-action bg-secondary">
                     <span class="menu-collapsed align-middle">Employee</span>
                 </a>
                 <a href="#" class="list-group-item list-group-item-action bg-secondary">

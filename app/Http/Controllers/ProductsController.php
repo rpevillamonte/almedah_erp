@@ -155,7 +155,7 @@ class ProductsController extends Controller
 
 
             $data->save();
-
+            
             return response()->json([
                 'status' => 'success'
             ]);

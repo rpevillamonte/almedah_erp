@@ -6,11 +6,14 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
-
                 <div class="card-body p-5" style="height:350px">
+                    {{-- <div class="bg-danger p-4 rounded-lg mb-6 text-white text-center">
+                        @if(session('status'))
+                            {{ session('status') }}
+                        @endif
+                    </div> --}}
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -56,12 +59,18 @@
                                 <button type="submit" class="btn custom-primary-bgcolor">
                                     {{ __('Login') }}
                                 </button>
-
-                                @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a href="/sign-in/google" class="btn btn-secondary">
+                                    {{ __('Login with Google') }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-12 offset-md-4">
+                            @if (Route::has('password.request'))
+                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
-                                @endif
+                            @endif
                             </div>
                         </div>
                     </form>

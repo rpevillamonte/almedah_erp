@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -50,9 +50,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => 'required|string|email|max:255|unique:env_employees,email',
+            'contact_number' => 'required|between:11,13',
+            'password' => 'required|between:8,15|confirmed',
+            'password_confirmation' => 'required',
         ]);
     }
 
@@ -64,10 +65,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        return Employee::create([
+            'last_name' => $data['last_name'],
+            'first_name' => $data['first_name'],
+            'position' => $data['position'],
+            'gender' => $data['gender'],
+            'profile_picture' => 'default',
+            'contact_number' => $data['contact_number'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
+            'active_status' => '0']);
     }
 }
