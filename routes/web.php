@@ -74,3 +74,7 @@ Route::resource('manufacturing/categorization', ManufacturingCategorizationContr
 Route::resource('manufacturing/products-typology', ManufacturingProductsTypologyController::class)->only([
     'index', 'create', 'show', 'edit'
 ]);
+
+Route::resource('manufacturing/products', ManufacturingProductsController::class)->only([
+    'index', 'create', 'show', 'edit'
+]);

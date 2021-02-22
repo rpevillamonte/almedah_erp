@@ -25,3 +25,7 @@ Route::resource('manufacturing/categorization', ManufacturingCategorizationApiCo
 Route::resource('manufacturing/products-typology', ManufacturingProductsTypologyApiController::class)->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+Route::resource('manufacturing/products', ManufacturingProductsApiController::class)->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
