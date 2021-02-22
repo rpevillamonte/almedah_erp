@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Socialite;
 use Str;
 use Hash;
-use \App\Models\Employee;
+use App\Models\Employee;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;

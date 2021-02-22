@@ -525,7 +525,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="$('#item-group-modal').modal('hide')">Close</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeSelectPickerModal($('#product_type'), $('#item-group-modal'))">Close</button>
                     <button type="submit" id="add-item-group-form-btn" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
@@ -613,7 +613,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="$('#add-unit-modal').modal('hide')">Close</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeSelectPickerModal($('#unit'), $('#add-unit-modal'))">Close</button>
                     <button type="submit" id="add-unit-form-btn" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
@@ -701,8 +701,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="$('#add-attribute-modal').modal('hide')">Close</button>
-                    <button type="button" id="add-attribute-form-btn" class="btn btn-primary" onclick="$('#add-attribute-modal').modal('hide')">Save changes</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeSelectPickerModal($('#attribute'), $('#add-attribute-modal'))">Close</button>
+                    <button type="submit" id="add-attribute-form-btn" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </form>
@@ -773,6 +773,14 @@
 
 
 <script>
+    // General function for closing modals & resetting the respective select element
+    function closeSelectPickerModal(selectPicker, modal){
+        if(selectPicker.selectpicker && modal.modal){
+            modal.modal('hide');
+            selectPicker.val('none');
+            selectPicker.selectpicker('refresh');
+        }
+    }
     $(document).on('hidden.bs.modal', '.modal', function () {
         $('.modal:visible').length && $(document.body).addClass('modal-open');
     });

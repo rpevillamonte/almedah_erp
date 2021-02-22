@@ -22,6 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->string('profile_picture');
             $table->string('contact_number');
             $table->string('email');
+            $table->string('password');
             $table->boolean('active_status');
             $table->timestamps();
         });
