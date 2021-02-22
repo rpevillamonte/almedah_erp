@@ -13,6 +13,7 @@ class CreateBom extends Migration
      */
     public function up()
     {
+        /*
         Schema::create('bom_bill_of_materials', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
@@ -29,6 +30,7 @@ class CreateBom extends Migration
             //$table->foreign('product_code')->references('product_code')->on('man_products');
             $table->timestamps();
         });
+        */
     }
 
     /**
@@ -38,6 +40,8 @@ class CreateBom extends Migration
      */
     public function down()
     {
+        /*
         Schema::dropIfExists('bom_bill_of_materials');
+        */
     }
 }

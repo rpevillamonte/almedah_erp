@@ -13,12 +13,14 @@ class CreateProductsTypologyTable extends Migration
      */
     public function up()
     {
+        /*
         Schema::create('man_products_typology', function (Blueprint $table) {
             $table->string('product_type')->primary();
             $table->string('product_subtype');
             $table->string('procurement_method');
             $table->timestamps();
         });
+        */
     }
 
     /**
@@ -28,6 +30,8 @@ class CreateProductsTypologyTable extends Migration
      */
     public function down()
     {
+        /*
         Schema::dropIfExists('man_products_typology');
+        */
     }
 }

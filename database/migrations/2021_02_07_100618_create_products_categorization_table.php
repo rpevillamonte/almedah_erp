@@ -13,11 +13,13 @@ class CreateProductsCategorizationTable extends Migration
      */
     public function up()
     {
+        /*
         Schema::create('man_categorization', function (Blueprint $table) {
             $table->string('accounting_family');
             $table->string('product_category')->primary();
             $table->timestamps();
         });
+        */
     }
 
     /**
@@ -27,6 +29,8 @@ class CreateProductsCategorizationTable extends Migration
      */
     public function down()
     {
+        /*
         Schema::dropIfExists('man_categorization');
+        */
     }
 }

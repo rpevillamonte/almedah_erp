@@ -13,6 +13,7 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
+        /*
         Schema::create('man_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('product_code');
@@ -27,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->string('picture');
             $table->timestamps();
         });
+        */
     }
 
     /**
@@ -36,8 +38,10 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        /*
         Schema::table('man_products', function (Blueprint $table) {
             //
         });
+        */
     }
 }
