@@ -29,3 +29,7 @@ Route::resource('manufacturing/products-typology', ManufacturingProductsTypology
 Route::resource('manufacturing/products', ManufacturingProductsApiController::class)->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+Route::resource('bill-of-materials/bill-of-materials', BillOfMaterialsBillOfMaterialsApiController::class)->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);

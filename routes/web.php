@@ -78,3 +78,7 @@ Route::resource('manufacturing/products-typology', ManufacturingProductsTypology
 Route::resource('manufacturing/products', ManufacturingProductsController::class)->only([
     'index', 'create', 'show', 'edit'
 ]);
+
+Route::resource('bill-of-materials/bill-of-materials', BillOfMaterialsBillOfMaterialsController::class)->only([
+    'index', 'create', 'show', 'edit'
+]);
