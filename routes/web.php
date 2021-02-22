@@ -70,3 +70,7 @@ Route::get('/bom', 'BOMController@index');
 Route::resource('manufacturing/categorization', ManufacturingCategorizationController::class)->only([
     'index', 'create', 'show', 'edit'
 ]);
+
+Route::resource('manufacturing/products-typology', ManufacturingProductsTypologyController::class)->only([
+    'index', 'create', 'show', 'edit'
+]);

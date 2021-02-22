@@ -21,3 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('manufacturing/categorization', ManufacturingCategorizationApiController::class)->only([
     'index', 'store', 'show', 'update', 'destroy'
 ]);
+
+Route::resource('manufacturing/products-typology', ManufacturingProductsTypologyApiController::class)->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
