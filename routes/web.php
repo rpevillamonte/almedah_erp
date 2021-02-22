@@ -66,3 +66,7 @@ Route::patch('/update-product/{id}', 'ProductsController@update');
 Route::post('/createBOM', 'BOMController@store');
 Route::get('/search-product/{product_code}', 'BOMController@search_product');
 Route::get('/bom', 'BOMController@index');
+
+Route::resource('manufacturing/categorization', ManufacturingCategorizationController::class)->only([
+    'index', 'create', 'show', 'edit'
+]);
