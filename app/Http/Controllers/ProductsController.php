@@ -100,10 +100,6 @@ class ProductsController extends Controller
                 }
             }
 
-
-
-
-
             // if (isset($form_data['attribute_value_array'])) {
             //     foreach ($form_data['attribute_array'] as $attribute_value) {
             //         //$ProductVariantWithValueData = ProductVariantWithValue::where([['product_id', '=', $form_data['attribute_id']], ['attribute', '=', $form_data['attribute_name_array'][(int)$i]]])->first();

@@ -8,7 +8,9 @@
                         <li class="list-bom">
                             <a class="nav-link menu" href="#"><span class="dot-primary"></span> Item</a>
                         </li>
-                        <li class="list-bom"><a class="nav-link menu" href="#" data-name="BOM">Bills of Materials</a></li>
+                        <li class="list-bom">
+                            <a class="nav-link menu" href="#" data-name="BOM"><span class="dot-primary"></span> Bill of Materials</a>
+                        </li>
                         <li class="list-bom"><a class="nav-link menu" href="#" data-name="Workstation">Workstation</a></li>
                         <li class="list-bom"><a class="nav-link menu" href="#" data-name="Operations">Operations</a></li>
                         <li class="list-bom"><a class="nav-link menu" href="#" data-name="Routing">Routing</a></li>

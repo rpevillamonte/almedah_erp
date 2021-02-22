@@ -49,6 +49,15 @@ Route::get('/customer', function () { return view('modules.customer'); });
 Route::get('/customertable', function () { return view('modules.customertable'); });
 
 
+Route::get('/newbom', function () {
+    return view('modules.newbom');
+});
+
+// Route::get('/inventory', function () {
+//     return view('modules.inventory');
+// });
+
+
 // added post & update routes for customer module
 Route::post('/create-customer', 'CustomerController@store')->name('customer');
 Route::put('/update-customer/{id}', 'CustomerController@update');
@@ -95,6 +104,7 @@ Route::post('/delete-material/{id}', 'MaterialsController@delete');
 Route::patch('/update-material/{id}', 'MaterialsController@update')->name('material.update');
 Route::patch('/update-product/{id}', 'ProductsController@update');
 
+
 Route::get('/test', 'DebugController@index');
 Route::post('/test', 'DebugController@debug');
 
@@ -114,3 +124,9 @@ Route::put('/update-employee-status/{id}/{stat}', 'EmployeeController@toggle');
 Route::get('/sign-in/google', 'Auth\LoginController@google');
 Route::get('/sign-in/google/redirect', 'Auth\LoginController@googleRedirect');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
+/*BOM TABLE ROUTE*/
+Route::post('/createBOM', 'BOMController@store');
+Route::get('/search-product/{product_code}', 'BOMController@search_product');
+Route::get('/bom', 'BOMController@index');
+

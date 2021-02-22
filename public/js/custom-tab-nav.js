@@ -98,11 +98,11 @@ function subloadNewBOM() {
     });
 }
 
-function loadBOM() {
-    $(document).ready(function () {
-        $("#contentBOM").load("modules/bom.php");
-    });
-}
+/*function loadBOM() {
+  $(document).ready(function () {
+    $('#contentBOM').load('modules/bom.php');
+  });
+}*/
 
 function openBlueprint() {
     $(document).ready(function () {
