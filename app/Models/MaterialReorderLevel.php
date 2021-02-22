@@ -5,21 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ManufacturingMaterials extends Model
+class MaterialReorderLevel extends Model
 {
     use HasFactory;
-    protected $table = 'env_raw_materials';
-    public $timestamps = true;
+    protected $table = 'env_reorder_level';
     protected $fillable = [
-        'item_code',
-        'item_name',
-        'item_image',
+        'reorder_id',
         'category_id',
-        'unit_price',
-        'total_amount',
-        'rm_status'
+        'reorder_qty',
+        'reorder_level'
     ];
-
+    public $timestamps = false;
+    
     public function category(){
         return $this->belongsTo(MaterialCategory::class, 'category_id');
     }

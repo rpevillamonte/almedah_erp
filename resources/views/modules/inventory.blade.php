@@ -7,7 +7,9 @@
             </div>
             <div class="row pb-2">
                 <div class="col-12 text-right">
-                    <p><button type="button" class="btn btn-outline-primary btn-sm" onclick="$('#create-material-form').modal('show')"><i class="fas fa-plus" aria-hidden="true"></i> Add New</button></p>
+                    <p><button type="button" class="btn btn-outline-primary btn-sm"
+                            onclick="$('#create-material-form').modal('show')"><i class="fas fa-plus"
+                                aria-hidden="true"></i> Add New</button></p>
                 </div>
             </div>
 
@@ -38,24 +40,34 @@
                                             <input type="checkbox" class="form-check-input">
                                         </div>
                                     </td> --}}
-                        <td>{{ $row->item_code }}</td>
-                        <td>{{ $row->item_name }}</td>
-                        <td>{{ $row->category->category_title }}</td>
-                        <td class="text-black-50">{{ $row->unit_price }}</td>
-                        <td class="text-black-50">{{ $row->total_amount }}</td>
-                        <td class="text-black-50">{{ $row->rm_status }}</td>
-                        <td class="text-black-50 text-center"><a href='#' onclick="$('#image-view').attr('src', 'storage/{{ $row["item_image"] }}')" class="row-img-view-btn" data-toggle="modal" data-target="#exampleImage">View</a></td>
-                        <td class="">
-                            <ul class="list-inline m-0">
-                                <li class="list-inline-item">
-                                    <button data-id="{{ $row->id }}" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-edit"></i></button>
-                                </li>
-                                <li class="list-inline-item">
-                                    <button data-id="{{ $row->id }}" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-trash"></i></button>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
+                            <td>{{ $row->item_code }}</td>
+                            <td>{{ $row->item_name }}</td>
+                            <td>{{ $row->category->category_title }}</td>
+                            <td class="text-black-50">{{ $row->unit_price }}</td>
+                            <td class="text-black-50">{{ $row->total_amount }}</td>
+                            <td class="text-black-50">{{ $row->rm_status }}</td>
+                            <td class="text-black-50 text-center"><a href='#'
+                                    onclick="$('#image-view').attr('src', 'storage/{{ $row['item_image'] }}')"
+                                    class="row-img-view-btn" data-toggle="modal" data-target="#exampleImage">View</a>
+                            </td>
+                            <td class="">
+                                <ul class="list-inline m-0">
+                                    <li class="list-inline-item">
+                                        <button data-id="{{ $row->id }}" data-toggle="modal"
+                                            data-target="#update-item-form"
+                                            class="edit-btn btn btn-success btn-sm rounded-0" type="button"
+                                            data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Edit"><i class="fa fa-edit"></i></button>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <button data-id="{{ $row->id }}"
+                                            class="delete-btn btn btn-danger btn-sm rounded-0" type="button"
+                                            data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Delete"><i class="fa fa-trash"></i></button>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -77,12 +89,14 @@
                         });
                     }
                 });
+
             </script>
         </div>
     </div>
 </div>
 <!-- IMAGE PART MODAL -->
-<div class="modal fade" id="exampleImage" tabindex="-1" role="dialog" aria-labelledby="exampleImageLabel" aria-hidden="true">
+<div class="modal fade" id="exampleImage" tabindex="-1" role="dialog" aria-labelledby="exampleImageLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -101,12 +115,14 @@
     </div>
 </div>
 <!-- Edit Material Modal-->
-<div class="modal fade" id="update-material-form-modal" tabindex="-1" aria-labelledby="updateModalForm" aria-hidden="true">
+<div class="modal fade" id="update-material-form-modal" tabindex="-1" aria-labelledby="updateModalForm"
+    aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title d-inline">Edit Material</h5>
-                <button type="button" class="close" onclick="$('#update-material-form-modal').modal('hide')" aria-label="close">&times;</button>
+                <button type="button" class="close" onclick="$('#update-material-form-modal').modal('hide')"
+                    aria-label="close">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="update-material-form" action="#" method="POST" enctype="multipart/form-data">
@@ -116,13 +132,15 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="">Material Code</label>
-                                <input class="form-control" type="text" id="material_code" name="material_code" placeholder="Ex. MT181204" required>
+                                <input class="form-control" type="text" id="material_code" name="material_code"
+                                    placeholder="Ex. MT181204" required>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="">Material Name</label>
-                                <input class="form-control" type="text" id="material_name" name="material_name" required>
+                                <input class="form-control" type="text" id="material_name" name="material_name"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -131,13 +149,19 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="">Material Categories</label>
-                                <select class="form-control" id="material_category" name="material_category" required>
+                                <select class="form-control" id="material_category" name="material_category"
+                                    onchange="openCategory(value)" required>
                                     <option value="" selected disabled hidden>
                                         Select an Option
                                     </option>
                                     @foreach ($categories as $row)
-                                    <option value="{{ $row['id'] }}" name="category">{{ $row['category_title'] }}</option>
+                                        <option value="{{ $row['id'] }}" name="category">
+                                            {{ $row['category_title'] }}</option>
                                     @endforeach
+                                    <option id="newCategoryButton">
+                                        + Add new Category
+                                    </option>
+
                                 </select>
                             </div>
                         </div>
@@ -166,13 +190,15 @@
 
                     <div class="form-group">
                         <label for="">Unit Price</label>
-                        <input class="form-control" type="text" id="unit_price" name="unit_price" required placeholder="Ex. 100">
+                        <input class="form-control" type="text" id="unit_price" name="unit_price" required
+                            placeholder="Ex. 100">
                     </div>
 
 
                     <div class="form-group">
                         <label for="">Total Quantity</label>
-                        <input class="form-control" type="text" id="total_amount" name="total_amount" required placeholder="Ex. 500">
+                        <input class="form-control" type="text" id="total_amount" name="total_amount" required
+                            placeholder="Ex. 500">
                     </div>
 
 
@@ -189,7 +215,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="$('#update-material-form-modal').modal('hide')">Close</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="$('#update-material-form-modal').modal('hide')">Close</button>
                         <button id="update-material-form-modal-btn" type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
@@ -200,12 +227,13 @@
 
 
 <!-- Add Material Modal -->
-<div class="modal fade" id="create-material-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="create-material-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Material</h5>
-                <button type="button" class="close" onclick="$('#create-material-form').modal('hide')" aria-label="Close">
+                <button type="button" class="close" onclick="$('#create-material-form').modal('hide')"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -216,11 +244,12 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="">Material Code</label>
-                                <input class="form-control" type="text" name="material_code" placeholder="Ex. MT181204" required>
+                                <input class="form-control" type="text" name="material_code" placeholder="Ex. MT181204"
+                                    required>
                                 @error('product_code')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
@@ -236,13 +265,18 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="">Material Categories</label>
-                                <select class="form-control" name="material_category" required>
+                                <select class="form-control" id="material_category1" name="material_category" onchange="openCategory(value)"
+                                    required>
                                     <option value="" selected disabled hidden>
                                         Select an Option
                                     </option>
                                     @foreach ($categories as $row)
-                                    <option value="{{ $row['id'] }}" name="category">{{ $row['category_title'] }}</option>
+                                        <option value="{{ $row['id'] }}" name="category">
+                                            {{ $row['category_title'] }}</option>
                                     @endforeach
+                                    <option id="newCategoryButton">
+                                       + Add new Category
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -250,8 +284,9 @@
 
                     <div class="form-group p-2">
                         <label for="">Image</label>
-                        <img id="img_tmp1" src="../images/thumbnail.png" style="width:100%;">
-                        <input class="form-control" type="file" name="material_image" onchange="readURL3(this);" required>
+                        <img id="img_tmp" src="../images/thumbnail.png" style="width:100%;">
+                        <input class="form-control" type="file" name="material_image" onchange="readURL3(this);"
+                            required>
                     </div>
 
                     <script>
@@ -267,6 +302,7 @@
                                 reader.readAsDataURL(input.files[0]);
                             }
                         }
+
                     </script>
 
                     <div class="form-group">
@@ -294,8 +330,64 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="$('#create-material-form').modal('hide')">Close</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick="$('#create-material-form').modal('hide')">Close</button>
                         <button id="material-form-btn" type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ADD CATEGORY MODAL -->
+<div class="modal fade" id="add-Category-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Categories</h5>
+                <button type="button" class="close" onclick="closeCategory()" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="category-form" method="post" enctype="multipart/form-data" action="/create-categories"
+                    onsubmit="return false">
+                    @csrf
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="">Category Code</label>
+                                <input class="form-control" type="text" name="category_title"
+                                    placeholder="Ex. Stone, Gold" required>
+                                @error('category_title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="">Category Description</label>
+                                <textarea class="form-control" type="text" name="category_description" required
+                                    placeholder="Ex. Gold Category"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Quantity</label>
+                        <input class="form-control" type="number" name="category_quantity" required
+                            placeholder="Ex. 100">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button onclick="closeCategory()" type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Close</button>
+                        <button id="category-form-btn" class="btn btn-primary" data-dismiss="modal">Save
+                            changes</button>
                     </div>
                 </form>
             </div>
@@ -404,7 +496,8 @@
                     //console.log("success");
                     if (data.status == "success") {
                         // If a new image was set, use it as the value. Otherwise, use the old image
-                        var image = (data.image) ? data.image : sessionStorage.getItem('old_image');
+                        var image = (data.image) ? data.image : sessionStorage.getItem(
+                            'old_image');
                         sessionStorage.removeItem('old_image');
                         // Hide the modal create form
                         $('#update-material-form-modal').modal('hide');
@@ -416,7 +509,8 @@
                             sessionStorage.setItem("status", "success");
                             // Removing the old row
                             $('#inventoryTable').DataTable()
-                                .row($('#row-' + sessionStorage.getItem('material-edit-id')))
+                                .row($('#row-' + sessionStorage.getItem(
+                                    'material-edit-id')))
                                 .remove()
                                 .draw();
                             // Adding the updated row
@@ -426,21 +520,27 @@
                                     formData.get('material_code'),
                                     formData.get('material_name'),
                                     data.category_title,
-                                    '<span class="text-black-50">' + formData.get('unit_price') + '</span>',
-                                    '<span class="text-black-50">' + formData.get('total_amount') + '</span>',
-                                    '<span class="text-black-50">' + formData.get('rm_status') + '</span>',
+                                    '<span class="text-black-50">' + formData
+                                    .get('unit_price') + '</span>',
+                                    '<span class="text-black-50">' + formData
+                                    .get('total_amount') + '</span>',
+                                    '<span class="text-black-50">' + formData
+                                    .get('rm_status') + '</span>',
                                     "<span class='text-black-50 text-center w-100' style='display: inline-block'>" +
-                                    "<a href='#' onclick=\"$('#image-view'). attr('src', 'storage/" + image +
+                                    "<a href='#' onclick=\"$('#image-view'). attr('src', 'storage/" +
+                                    image +
                                     "')\" data-toggle=\"modal\" data-target=\"#exampleImage\">View</a>" +
                                     "</span>",
                                     '<ul class="list-inline m-0">' +
                                     '<li class="list-inline-item">' +
-                                    '<button data-id="' + data.id + '" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">' +
+                                    '<button data-id="' + data.id +
+                                    '" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">' +
                                     '<i class="fa fa-edit"></i>' +
                                     '</button>' +
                                     '</li>' +
                                     '<li class="list-inline-item">' +
-                                    '<button data-id="' + data.id + '" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">' +
+                                    '<button data-id="' + data.id +
+                                    '" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">' +
                                     '<i class="fa fa-trash"></i>' +
                                     '</button>' +
                                     '</li>' +
@@ -475,6 +575,7 @@
                 }
             });
             var formData = new FormData(this);
+            //Gets material category id idk why its not getting inside the form data
             $.ajax({
                 type: 'POST',
                 url: $('#material-form').attr('action'),
@@ -506,21 +607,27 @@
                                     formData.get('material_code'),
                                     formData.get('material_name'),
                                     data.category_title,
-                                    '<span class="text-black-50">' + formData.get('unit_price') + '</span>',
-                                    '<span class="text-black-50">' + formData.get('total_amount') + '</span>',
-                                    '<span class="text-black-50">' + formData.get('rm_status') + '</span>',
+                                    '<span class="text-black-50">' + formData
+                                    .get('unit_price') + '</span>',
+                                    '<span class="text-black-50">' + formData
+                                    .get('total_amount') + '</span>',
+                                    '<span class="text-black-50">' + formData
+                                    .get('rm_status') + '</span>',
                                     "<span class='text-black-50 text-center w-100' style='display: inline-block'>" +
-                                    "<a href='#' onclick=\"$('#image-view'). attr('src', 'storage/" + data.image +
+                                    "<a href='#' onclick=\"$('#image-view'). attr('src', 'storage/" +
+                                    data.image +
                                     "')\" data-toggle=\"modal\" data-target=\"#exampleImage\">View</a>" +
                                     "</span>",
                                     '<ul class="list-inline m-0">' +
                                     '<li class="list-inline-item">' +
-                                    '<button data-id="' + data.id + '" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">' +
+                                    '<button data-id="' + data.id +
+                                    '" data-toggle="modal" data-target="#update-item-form" class="edit-btn btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">' +
                                     '<i class="fa fa-edit"></i>' +
                                     '</button>' +
                                     '</li>' +
                                     '<li class="list-inline-item">' +
-                                    '<button data-id="' + data.id + '" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">' +
+                                    '<button data-id="' + data.id +
+                                    '" class="delete-btn btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">' +
                                     '<i class="fa fa-trash"></i>' +
                                     '</button>' +
                                     '</li>' +
@@ -542,11 +649,51 @@
                                 $('#materials-picker').append(
                                     "<input id='raw_"+data.id+"' type='text' value='"+formData.get('total_amount')+"' hidden>"
                                 );
-                            }else{
-                                console.log("PICKER ISN'T HERE");
                             }
                         });
                     }
+                },
+                error: function(data) {
+                    console.log("error");
+                    console.log(data);
+                }
+            });
+        });
+
+        //Add Categories AJAX
+        $('#category-form').submit(function(e) {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: $('#category-form').attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                // "Data" is a JSON that contains the status of the save, the ID of the new record
+                // and the path of the uploaded image
+                success: function(data) {
+                    // Hide the modal create form
+                    $('#add-Category-form').modal('hide');
+                    
+                    // Add it to the categories
+
+                    $('#material_category').prepend($('<option>', {
+                        value: data.id,
+                        text: data.category_title
+                    }));
+
+                    $('#material_category1').prepend($('<option>', {
+                        value: data.id,
+                        text: data.category_title
+                    }));
+
                 },
                 error: function(data) {
                     console.log("error");
@@ -618,4 +765,19 @@
         }
         sessionStorage.removeItem("status");
     });
+
+</script>
+
+<script>
+    function openCategory(value) {
+        if (value == "+ Add new Category") {
+            $('#create-material-form').modal('hide');
+            $('#add-Category-form').modal('show');
+        }
+    }
+
+    function closeCategory() {
+        $('#add-Category-form').modal('hide');
+    }
+
 </script>

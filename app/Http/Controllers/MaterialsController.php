@@ -10,8 +10,7 @@ use Exception;
 
 class MaterialsController extends Controller
 {
-    function index()
-    {
+    function index(){
         $raw_materials = ManufacturingMaterials::with('category')->get();
         $man_mats_categories = MaterialCategory::get();
         return view('modules.inventory', [
@@ -102,6 +101,28 @@ class MaterialsController extends Controller
             return response()->json([
                 'status' => 'failed ' . $e
             ]);
+        }
+    }
+
+    public function storeCategory(Request $request){
+        try {
+            /* Insert Category to env_raw_categories table */
+            $form_data = $request->input();
+            $data = new MaterialCategory();
+            $data->category_title = $form_data['category_title'];
+            $data->description = $form_data['category_description'];
+            $data->quantity  = $form_data['category_quantity'];
+            $data->save();
+            return response()->json([
+                'status' => 'success',
+                'id' => $data->id,
+                'category_title' => $data->category_title
+            ]);
+        } catch (Exception $e) {
+            return $e;
+            // return response()->json([
+            //     'status' => 'failed'
+            // ]);
         }
     }
 }

@@ -20,6 +20,7 @@ class ManufacturingProducts extends Model
         'picture',
         'unit',
         'internal_description',
-        'bar_code'
+        'bar_code',
+        'picture'
     ];
 }

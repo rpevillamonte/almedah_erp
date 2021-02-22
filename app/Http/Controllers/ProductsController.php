@@ -11,6 +11,7 @@ use \App\Models\ProductVariantWithValue;
 use Illuminate\Http\Request;
 use DB;
 use PhpOption\None;
+use Exception;
 
 class ProductsController extends Controller
 {

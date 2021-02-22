@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MaterialsController;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     if (Auth::check())
@@ -56,6 +58,30 @@ Route::get('/item','ProductsController@index');
 Route::get('/get-attribute/{id}', 'ProductsController@get_attribute');
 Route::patch('/create-product', 'ProductsController@store');
 Route::patch('/update-product/{id}', 'ProductsController@update');
+Route::get('/inventory', 'MaterialsController@index')->name('inventory');
+Route::get('/inventory/{id}', 'MaterialsController@get')->name('inventory.specific');
+
+
+/*PRODUCT POST METHOD*/
+Route::post('/create-product', 'ProductsController@store');
+/*MATERIAL POST METHOD*/
+Route::post('/create-material', 'MaterialsController@store');
+/*MATERIAL CATEGORY POST METHOD*/
+Route::post('/create-categories' , 'MaterialsController@storeCategory');
+
+/*DEBUGGING*/
+// Route::post('/create-product', function(Request $request){
+//     echo json_encode($request->all());
+// });
+
+Route::patch('/update-material/{id}', 'MaterialsController@update')->name('material.update');
+Route::patch('/update-product/{id}', 'ProductsController@update');
+
+/*DEBUGGING*/
+// Route::patch('/update-product/{id}', function(Request $request){
+//     echo json_encode($request->all());
+// });
+
 Route::post('/delete-product/{id}', 'ProductsController@delete');
 Route::post('/create-item-group', 'ProductsController@add_item_group');
 Route::post('/create-product-unit', 'ProductsController@add_product_unit');
@@ -71,6 +97,7 @@ Route::patch('/update-product/{id}', 'ProductsController@update');
 
 Route::get('/test', 'DebugController@index');
 Route::post('/test', 'DebugController@debug');
+
 // added get routes for employee module
 Route::get('/profile', function () { return view('modules.profile'); })->name('profile');
 Route::get('/hr', function () { return view('modules.hr'); });

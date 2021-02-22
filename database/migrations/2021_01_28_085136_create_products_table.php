@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('unit');
             $table->string('internal_description');
             $table->string('bar_code');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->timestamps();
         });
     }
